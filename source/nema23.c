@@ -8,7 +8,7 @@
 #include "fsl_flexcan.h"
 
 #define TX_MESSAGE_BUFFER_INDEX (10)
-#define RX_MESSAGE_BUFFER_INDEX (9)
+#define RX_MESSAGE_BUFFER_INDEX (10)
 
 volatile uint32_t g_systickCounter;
 volatile bool g_pinSet = false;
@@ -92,15 +92,14 @@ int main(void) {
     						CAN_WORD0_DATA_BYTE_2(0x00) |
     						CAN_WORD0_DATA_BYTE_3(0x00);
         txFrame.dataWord1 = CAN_WORD1_DATA_BYTE_4(0x00) |
-    						CAN_WORD1_DATA_BYTE_5(0xC8) |
+    						CAN_WORD1_DATA_BYTE_5(0xA8) |
     						CAN_WORD1_DATA_BYTE_6(0x00) |
-    						CAN_WORD1_DATA_BYTE_7(0xCB);
+    						CAN_WORD1_DATA_BYTE_7(0xAB);
 
         FLEXCAN_WriteTxMb(CAN1, TX_MESSAGE_BUFFER_INDEX, &txFrame);
         PRINTF(" -- 2 -- \n");
 
-//        while (!FLEXCAN_GetMbStatusFlags(CAN1, 1 << TX_MESSAGE_BUFFER_INDEX));
-//        PRINTF(" -- 3 -- \n");
+        while (!FLEXCAN_GetMbStatusFlags(CAN1, 1 << TX_MESSAGE_BUFFER_INDEX));
 
         PRINTF(" 3 -- FLEXCAN_GetMbStatusFlags  %d\r\n", FLEXCAN_GetMbStatusFlags(CAN1, 1 << TX_MESSAGE_BUFFER_INDEX));
 
@@ -134,9 +133,6 @@ int main(void) {
                 PRINTF(" -- 8 -- \n");
                 /* Waits until the receive message buffer is full. */
             //    while (!FLEXCAN_GetMbStatusFlags(EXAMPLE_CAN, 1 << RX_MESSAGE_BUFFER_INDEX));
-            //    /* Reads the received message from the receive message buffer. */
-                /* Cleans the receive message buffer full status. */
-            //    FLEXCAN_ClearMbStatusFlags(EXAMPLE_CAN, 1 << RX_MESSAGE_BUFFER_INDEX);
                 FLEXCAN_ReadRxMb(CAN1, RX_MESSAGE_BUFFER_INDEX, &rxFrame);
 
                 __asm volatile ("nop");
