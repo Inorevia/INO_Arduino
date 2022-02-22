@@ -1,0 +1,12 @@
+/home/samia/ws_imx/nema23/drivers/fsl_common_arm.h:210:20:_SDK_AtomicLocalClearAndSet4Byte	48	static
+/home/samia/ws_imx/nema23/drivers/fsl_clock.h:1298:20:CLOCK_ControlGate	32	static
+/home/samia/ws_imx/nema23/drivers/fsl_clock.h:1315:20:CLOCK_EnableClock	16	static
+/home/samia/ws_imx/nema23/drivers/fsl_iomuxc.h:859:20:IOMUXC_SetPinMux	24	static
+../board/pin_mux.c:173:6:BOARD_InitBootPins	8	static
+../board/pin_mux.c:194:6:BOARD_InitPins	24	static
+../board/pin_mux.c:227:6:BOARD_InitDEBUG_UARTPins	16	static
+../board/pin_mux.c:289:6:BOARD_InitSDRAMPins	16	static
+../board/pin_mux.c:351:6:BOARD_InitCANPins	16	static
+../board/pin_mux.c:385:6:BOARD_InitENETPins	16	static
+../board/pin_mux.c:424:6:BOARD_InitUSDHCPins	16	static
+../board/pin_mux.c:457:6:BOARD_InitQSPIPins	16	static
