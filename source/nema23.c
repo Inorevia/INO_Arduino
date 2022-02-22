@@ -8,9 +8,13 @@
 #include "fsl_flexcan.h"
 
 #define TX_MESSAGE_BUFFER_INDEX (10)
-#define RX_MESSAGE_BUFFER_INDEX (10)
+#define RX_MESSAGE_BUFFER_INDEX (9)
 
 volatile uint32_t g_systickCounter;
+volatile uint32_t log1;
+volatile uint32_t log2;
+volatile uint32_t log3;
+volatile uint32_t log4;
 volatile bool g_pinSet = false;
 
 void SysTick_Handler(void)
@@ -56,9 +60,10 @@ int main(void) {
     flexcan_frame_t txFrame;
     flexcan_frame_t rxFrame;
     flexcanConfig.clkSrc               = kFLEXCAN_ClkSrc0;
-    flexcanConfig.bitRate              = 1000000U;
+//    flexcanConfig.bitRate              = 1000000U;
+    flexcanConfig.baudRate = 1000000U;
     flexcanConfig.enableIndividMask    = false;
-    flexcanConfig.enableLoopBack = true;
+    flexcanConfig.enableLoopBack = false;
     flexcanConfig.enableSelfWakeup     = true;
     flexcanConfig.enableIndividMask    = false;
     flexcanConfig.disableSelfReception = false;
@@ -80,7 +85,7 @@ int main(void) {
 
         mbConfig.format    = kFLEXCAN_FrameFormatStandard;
         mbConfig.type    = kFLEXCAN_FrameTypeData;
-        mbConfig.id    = FLEXCAN_ID_STD(0x01);
+        mbConfig.id    = FLEXCAN_ID_STD(0x00);
 
     volatile static int i = 0 ;
     while(1) {
@@ -92,14 +97,17 @@ int main(void) {
     						CAN_WORD0_DATA_BYTE_2(0x00) |
     						CAN_WORD0_DATA_BYTE_3(0x00);
         txFrame.dataWord1 = CAN_WORD1_DATA_BYTE_4(0x00) |
-    						CAN_WORD1_DATA_BYTE_5(0xA8) |
+    						CAN_WORD1_DATA_BYTE_5(0x18) |
     						CAN_WORD1_DATA_BYTE_6(0x00) |
-    						CAN_WORD1_DATA_BYTE_7(0xAB);
+    						CAN_WORD1_DATA_BYTE_7(0x1B);
 
         FLEXCAN_WriteTxMb(CAN1, TX_MESSAGE_BUFFER_INDEX, &txFrame);
-        PRINTF(" -- 2 -- \n");
+        PRINTF(" 2 -- FLEXCAN_GetMbStatusFlags  %d\r\n", FLEXCAN_GetMbStatusFlags(CAN1, 1 << TX_MESSAGE_BUFFER_INDEX));
 
+        log1 = FLEXCAN_GetMbStatusFlags(CAN1, 1 << TX_MESSAGE_BUFFER_INDEX);
         while (!FLEXCAN_GetMbStatusFlags(CAN1, 1 << TX_MESSAGE_BUFFER_INDEX));
+
+        log2 = FLEXCAN_GetMbStatusFlags(CAN1, 1 << TX_MESSAGE_BUFFER_INDEX);
 
         PRINTF(" 3 -- FLEXCAN_GetMbStatusFlags  %d\r\n", FLEXCAN_GetMbStatusFlags(CAN1, 1 << TX_MESSAGE_BUFFER_INDEX));
 
@@ -110,6 +118,17 @@ int main(void) {
         PRINTF(" 5 -- FLEXCAN_GetMbStatusFlags  %d\r\n", FLEXCAN_GetMbStatusFlags(CAN1, 1 << TX_MESSAGE_BUFFER_INDEX));
 
         SysTick_DelayTicks(10000U);
+
+        FLEXCAN_SetRxMbConfig(CAN1, RX_MESSAGE_BUFFER_INDEX, &mbConfig, true);
+        PRINTF(" -- 6 -- \n");
+
+        log3 = FLEXCAN_GetMbStatusFlags(CAN1, 1 << RX_MESSAGE_BUFFER_INDEX);
+//		while (!FLEXCAN_GetMbStatusFlags(CAN1, 1 << RX_MESSAGE_BUFFER_INDEX));
+        PRINTF(" -- 7 -- \n");
+
+        FLEXCAN_ReadRxMb(CAN1, RX_MESSAGE_BUFFER_INDEX, &rxFrame);
+        FLEXCAN_ClearMbStatusFlags(CAN1, 1 << RX_MESSAGE_BUFFER_INDEX);
+
 
                 txFrame.dataWord0 = CAN_WORD0_DATA_BYTE_0(0x03) |
             						CAN_WORD0_DATA_BYTE_1(0x00) |
@@ -123,20 +142,12 @@ int main(void) {
 
 
                 FLEXCAN_WriteTxMb(CAN1, TX_MESSAGE_BUFFER_INDEX, &txFrame);
-                PRINTF(" -- 6 -- \n");
+                PRINTF(" -- 8 -- \n");
 
                 FLEXCAN_ClearMbStatusFlags(CAN1, 1 << TX_MESSAGE_BUFFER_INDEX);
-                PRINTF(" -- 7 -- \n");
-
-
-                FLEXCAN_SetRxMbConfig(CAN1, RX_MESSAGE_BUFFER_INDEX, &mbConfig, true);
-                PRINTF(" -- 8 -- \n");
-                /* Waits until the receive message buffer is full. */
-            //    while (!FLEXCAN_GetMbStatusFlags(EXAMPLE_CAN, 1 << RX_MESSAGE_BUFFER_INDEX));
-                FLEXCAN_ReadRxMb(CAN1, RX_MESSAGE_BUFFER_INDEX, &rxFrame);
+                PRINTF(" -- 9 -- \n");
 
                 __asm volatile ("nop");
-                FLEXCAN_ClearMbStatusFlags(CAN1, 1 << RX_MESSAGE_BUFFER_INDEX);
 
                 SysTick_DelayTicks(10000U);
 
