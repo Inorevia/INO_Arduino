@@ -35,7 +35,7 @@ $(wildcard ../makefile.init) \
 $(wildcard ../makefile.targets) \
 
 
-BUILD_ARTIFACT_NAME := nema23
+BUILD_ARTIFACT_NAME := INO_Arduino
 BUILD_ARTIFACT_EXTENSION := axf
 BUILD_ARTIFACT_PREFIX :=
 BUILD_ARTIFACT := $(BUILD_ARTIFACT_PREFIX)$(BUILD_ARTIFACT_NAME)$(if $(BUILD_ARTIFACT_EXTENSION),.$(BUILD_ARTIFACT_EXTENSION),)
@@ -47,24 +47,24 @@ all:
 	+@$(MAKE) --no-print-directory main-build && $(MAKE) --no-print-directory post-build
 
 # Main-build Target
-main-build: nema23.axf
+main-build: INO_Arduino.axf
 
 # Tool invocations
-nema23.axf: $(OBJS) $(USER_OBJS) makefile objects.mk $(OPTIONAL_TOOL_DEPS)
+INO_Arduino.axf: $(OBJS) $(USER_OBJS) makefile objects.mk $(OPTIONAL_TOOL_DEPS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: MCU Linker'
-	arm-none-eabi-gcc -nostdlib -Xlinker -Map="nema23.map" -Xlinker --gc-sections -Xlinker -print-memory-usage -Xlinker --sort-section=alignment -Xlinker --cref -mcpu=cortex-m7 -mfpu=fpv5-sp-d16 -mfloat-abi=hard -mthumb -T nema23_Debug.ld -o "nema23.axf" $(OBJS) $(USER_OBJS) $(LIBS)
+	arm-none-eabi-gcc -nostdlib -Xlinker -Map="INO_Arduino.map" -Xlinker --gc-sections -Xlinker -print-memory-usage -Xlinker --sort-section=alignment -Xlinker --cref -mcpu=cortex-m7 -mfpu=fpv5-sp-d16 -mfloat-abi=hard -mthumb -T "INO_Arduino_Debug.ld" -o "INO_Arduino.axf" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
 # Other Targets
 clean:
-	-$(RM) $(EXECUTABLES)$(OBJS)$(C_DEPS) nema23.axf
+	-$(RM) $(EXECUTABLES)$(OBJS)$(C_DEPS) INO_Arduino.axf
 	-@echo ' '
 
 post-build:
 	-@echo 'Performing post-build steps'
-	-arm-none-eabi-size "nema23.axf"; # arm-none-eabi-objcopy -v -O binary "nema23.axf" "nema23.bin" ; # checksum -p MIMXRT1021xxxxx -d "nema23.bin";
+	-arm-none-eabi-size "INO_Arduino.axf"; # arm-none-eabi-objcopy -v -O binary "INO_Arduino.axf" "INO_Arduino.bin" ; # checksum -p MIMXRT1021xxxxx -d "INO_Arduino.bin";
 	-@echo ' '
 
 .PHONY: all clean dependents post-build

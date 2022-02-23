@@ -7,7 +7,6 @@
     <booleanAttribute key="com.crt.ctrlcenter.crtInit" value="true"/>
     <stringAttribute key="com.crt.ctrlcenter.currentWireType" value="SWD"/>
     <booleanAttribute key="com.crt.ctrlcenter.mainBreakIsHardware" value="true"/>
-    <booleanAttribute key="com.crt.ctrlcenter.saveState" value="true"/>
     <stringAttribute key="com.crt.ctrlcenter.serialNumber" value="LinkServerARMDAPLink CMSIS-DAP0226000047784e4500269003d9170017e561000097969900"/>
     <mapAttribute key="com.crt.ctrlcenter.symbolsGroupSettings"/>
     <intAttribute key="com.crt.ctrlcenter.version" value="6"/>
@@ -25,7 +24,7 @@
     <stringAttribute key="emu.speed" value=""/>
     <stringAttribute key="flash.driver.reset" value=""/>
     <stringAttribute key="gdbserver.host" value="localhost"/>
-    <stringAttribute key="gdbserver.port" value="10990"/>
+    <stringAttribute key="gdbserver.port" value="10989"/>
     <booleanAttribute key="gdbserver.start" value="true"/>
     <booleanAttribute key="internal.attach.slave" value="false"/>
     <booleanAttribute key="internal.cache" value="false"/>
@@ -53,7 +52,7 @@
     <booleanAttribute key="org.eclipse.cdt.debug.gdbjtag.core.loadImage" value="true"/>
     <booleanAttribute key="org.eclipse.cdt.debug.gdbjtag.core.loadSymbols" value="true"/>
     <stringAttribute key="org.eclipse.cdt.debug.gdbjtag.core.pcRegister" value=""/>
-    <intAttribute key="org.eclipse.cdt.debug.gdbjtag.core.portNumber" value="10990"/>
+    <intAttribute key="org.eclipse.cdt.debug.gdbjtag.core.portNumber" value="10989"/>
     <stringAttribute key="org.eclipse.cdt.debug.gdbjtag.core.runCommands" value="${run}"/>
     <booleanAttribute key="org.eclipse.cdt.debug.gdbjtag.core.setPcRegister" value="false"/>
     <booleanAttribute key="org.eclipse.cdt.debug.gdbjtag.core.setResume" value="false"/>
@@ -77,13 +76,13 @@
     <intAttribute key="org.eclipse.cdt.launch.ATTR_BUILD_BEFORE_LAUNCH_ATTR" value="2"/>
     <stringAttribute key="org.eclipse.cdt.launch.DEBUGGER_ID" value="gdb"/>
     <stringAttribute key="org.eclipse.cdt.launch.DEBUGGER_START_MODE" value="remote"/>
-    <stringAttribute key="org.eclipse.cdt.launch.PROGRAM_NAME" value="Debug/nema23.axf"/>
-    <stringAttribute key="org.eclipse.cdt.launch.PROJECT_ATTR" value="nema23"/>
+    <stringAttribute key="org.eclipse.cdt.launch.PROGRAM_NAME" value="Debug/INO_Arduino.axf"/>
+    <stringAttribute key="org.eclipse.cdt.launch.PROJECT_ATTR" value="INO_Arduino"/>
     <booleanAttribute key="org.eclipse.cdt.launch.PROJECT_BUILD_CONFIG_AUTO_ATTR" value="false"/>
     <stringAttribute key="org.eclipse.cdt.launch.PROJECT_BUILD_CONFIG_ID_ATTR" value="com.crt.advproject.config.exe.debug.2100208610"/>
     <booleanAttribute key="org.eclipse.cdt.launch.use_terminal" value="false"/>
     <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
-        <listEntry value="/nema23"/>
+        <listEntry value="/INO_Arduino"/>
     </listAttribute>
     <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
         <listEntry value="4"/>
