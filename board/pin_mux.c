@@ -180,8 +180,10 @@ void BOARD_InitBootPins(void) {
 BOARD_InitPins:
 - options: {callFromInitBoot: 'true', coreID: core0, enableClock: 'true'}
 - pin_list:
-  - {pin_num: '106', peripheral: GPIO1, signal: 'gpio_io, 05', pin_signal: GPIO_AD_B0_05}
+  - {pin_num: '106', peripheral: GPIO1, signal: 'gpio_io, 05', pin_signal: GPIO_AD_B0_05, direction: OUTPUT}
   - {pin_num: '76', peripheral: GPIO1, signal: 'gpio_io, 29', pin_signal: GPIO_AD_B1_13, direction: OUTPUT, gpio_init_state: 'false'}
+  - {pin_num: '32', peripheral: CAN1, signal: RX, pin_signal: GPIO_SD_B1_01}
+  - {pin_num: '33', peripheral: CAN1, signal: TX, pin_signal: GPIO_SD_B1_00}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 
@@ -194,6 +196,15 @@ BOARD_InitPins:
 void BOARD_InitPins(void) {
   CLOCK_EnableClock(kCLOCK_Iomuxc);           
 
+  /* GPIO configuration on GPIO_AD_B0_05 (pin 106) */
+  gpio_pin_config_t gpio1_pin106_config = {
+      .direction = kGPIO_DigitalOutput,
+      .outputLogic = 0U,
+      .interruptMode = kGPIO_NoIntmode
+  };
+  /* Initialize GPIO functionality on GPIO_AD_B0_05 (pin 106) */
+  GPIO_PinInit(GPIO1, 5U, &gpio1_pin106_config);
+
   /* GPIO configuration of CAN_STBY on GPIO_AD_B1_13 (pin 76) */
   gpio_pin_config_t CAN_STBY_config = {
       .direction = kGPIO_DigitalOutput,
@@ -205,6 +216,8 @@ void BOARD_InitPins(void) {
 
   IOMUXC_SetPinMux(IOMUXC_GPIO_AD_B0_05_GPIO1_IO05, 0U); 
   IOMUXC_SetPinMux(IOMUXC_GPIO_AD_B1_13_GPIO1_IO29, 0U); 
+  IOMUXC_SetPinMux(IOMUXC_GPIO_SD_B1_00_FLEXCAN1_TX, 0U); 
+  IOMUXC_SetPinMux(IOMUXC_GPIO_SD_B1_01_FLEXCAN1_RX, 0U); 
 }
 
 

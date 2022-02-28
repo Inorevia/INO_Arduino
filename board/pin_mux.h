@@ -51,6 +51,16 @@ void BOARD_InitBootPins(void);
 #define BOARD_INITPINS_CAN_STBY_PIN                                          29U   /*!< PORT pin number */
 #define BOARD_INITPINS_CAN_STBY_PIN_MASK                             (1U << 29U)   /*!< PORT pin mask */
 
+/* GPIO_SD_B1_01 (number 32), CAN1_RX/U9[4] */
+/* Routed pin properties */
+#define BOARD_INITPINS_CAN1_RX_PERIPHERAL                                   CAN1   /*!< Peripheral name */
+#define BOARD_INITPINS_CAN1_RX_SIGNAL                                         RX   /*!< Signal name */
+
+/* GPIO_SD_B1_00 (number 33), CAN1_TX/U9[1] */
+/* Routed pin properties */
+#define BOARD_INITPINS_CAN1_TX_PERIPHERAL                                   CAN1   /*!< Peripheral name */
+#define BOARD_INITPINS_CAN1_TX_SIGNAL                                         TX   /*!< Signal name */
+
 
 /*!
  * @brief Configures pin routing and optionally pin electrical features.

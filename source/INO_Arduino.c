@@ -8,6 +8,10 @@
 //#include "fsl_flexcan.h"
 #include "delay.h"
 #include "INO_flexCAN.h"
+#include "ino_core_pins.h"
+
+void blinkUSERLED();
+
 
 int main(void) {
 
@@ -19,27 +23,36 @@ int main(void) {
     BOARD_InitDebugConsole();
 #endif
 
-    if (SysTick_Config(SystemCoreClock / 1000U))
-    {
-        while (1)
-        {
-        }
-    }
-
+    initDelay();
     initCAN();
 
-    volatile static int i = 0 ;
     while(1) {
-        i++ ;
-
+    	PRINTF(" --- 1 --- \n");
         rotate_left_Motor();
-        delay(10000U);
-
+    	PRINTF(" --- 2 --- \n");
+        delay(500U);
+    	PRINTF(" --- 3 --- \n");
         readCAN();
-
+    	PRINTF(" --- 4 --- \n");
         stop_Motor();
+    	PRINTF(" --- 5 --- \n");
 
-		delay(10000U);
+        blinkUSERLED();
     }
     return 0 ;
+}
+
+void blinkUSERLED(){
+
+	static bool g_pinSet = false;
+
+    if (g_pinSet)	{
+        digitalWrite(ADD_LED_PIN, LOW);
+        g_pinSet = false;
+    }
+    else	{
+    	digitalWrite(ADD_LED_PIN, HIGH);
+        g_pinSet = true;
+    }
+	delay(100U);
 }

@@ -17,3 +17,9 @@ void delay(uint32_t n)
     {
     }
 }
+
+void initDelay(){
+	if (SysTick_Config(SystemCoreClock / 1000U)) {
+		while (1){}
+	}
+}

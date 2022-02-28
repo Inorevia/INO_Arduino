@@ -7,18 +7,21 @@ C_SRCS += \
 ../source/INO_Arduino.c \
 ../source/INO_flexCAN.c \
 ../source/delay.c \
+../source/ino_core_pins.c \
 ../source/semihost_hardfault.c 
 
 OBJS += \
 ./source/INO_Arduino.o \
 ./source/INO_flexCAN.o \
 ./source/delay.o \
+./source/ino_core_pins.o \
 ./source/semihost_hardfault.o 
 
 C_DEPS += \
 ./source/INO_Arduino.d \
 ./source/INO_flexCAN.d \
 ./source/delay.d \
+./source/ino_core_pins.d \
 ./source/semihost_hardfault.d 
 
 
