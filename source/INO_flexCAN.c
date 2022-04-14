@@ -13,10 +13,13 @@ flexcan_rx_mb_config_t mbConfig;
 flexcan_frame_t txFrame;
 flexcan_frame_t rxFrame;
 
+// txFrame.type   = kFLEXCAN_FrameTypeData;
+// txFrame.format = kFLEXCAN_FrameFormatStandard;
+
 #define SetMsg(x0,x1,x2,x3,x4,x5,x6,x7) \
   txFrame.format = kFLEXCAN_FrameFormatStandard;	\
   txFrame.type   = kFLEXCAN_FrameTypeData;	\
-  txFrame.id = FLEXCAN_ID_STD(0x01); \
+  txFrame.id = FLEXCAN_ID_STD(0x109); \
   txFrame.length = 8; \
   txFrame.dataByte0 = x0; \
   txFrame.dataByte1 = x1; \
@@ -27,9 +30,7 @@ flexcan_frame_t rxFrame;
   txFrame.dataByte6 = x6; \
   txFrame.dataByte7 = x7;
 
-
 void sendCAN();
-
 
 void initCAN(){
 
@@ -42,11 +43,11 @@ void initCAN(){
     FLEXCAN_Enable(CAN1, true);
 
     FLEXCAN_SetTxMbConfig(CAN1, TX_MESSAGE_BUFFER_INDEX, true);
+    FLEXCAN_SetRxMbConfig(CAN1, RX_MESSAGE_BUFFER_INDEX, &mbConfig, true);
 
-
-        mbConfig.format    = kFLEXCAN_FrameFormatStandard;
-        mbConfig.type    = kFLEXCAN_FrameTypeData;
-        mbConfig.id    = FLEXCAN_ID_STD(0x01);
+     mbConfig.format    = kFLEXCAN_FrameFormatStandard;
+     mbConfig.type    = kFLEXCAN_FrameTypeData;
+     mbConfig.id    = FLEXCAN_ID_STD(0x00);
 }
 
 
@@ -55,10 +56,14 @@ void rotate_left_Motor(){
     sendCAN();
 }
 
+void askPump(){
+    SetMsg(0x00, 0x00, 0x00, 0x00, 0x00, 0x5A, 0x52, 0xCC);
+    sendCAN();
+}
+
 void readCAN(){
 
-    FLEXCAN_SetRxMbConfig(CAN1, RX_MESSAGE_BUFFER_INDEX, &mbConfig, true);
-//		while (!FLEXCAN_GetMbStatusFlags(CAN1, 1 << RX_MESSAGE_BUFFER_INDEX));
+//	while (!FLEXCAN_GetMbStatusFlags(CAN1, 1 << RX_MESSAGE_BUFFER_INDEX));
 
     FLEXCAN_ReadRxMb(CAN1, RX_MESSAGE_BUFFER_INDEX, &rxFrame);
     FLEXCAN_ClearMbStatusFlags(CAN1, 1 << RX_MESSAGE_BUFFER_INDEX);
@@ -75,5 +80,6 @@ void sendCAN(){
 	FLEXCAN_WriteTxMb(CAN1, TX_MESSAGE_BUFFER_INDEX, &txFrame);
 
 	while (!FLEXCAN_GetMbStatusFlags(CAN1, 1 << TX_MESSAGE_BUFFER_INDEX));
+
 	FLEXCAN_ClearMbStatusFlags(CAN1, 1 << TX_MESSAGE_BUFFER_INDEX);
 }

@@ -26,16 +26,19 @@ int main(void) {
     initDelay();
     initCAN();
 
+
+	PRINTF(" --- 1 --- \n");
+    askPump();
+    delay(500U);
+	PRINTF(" --- 2 --- \n");
+    readCAN();
+
+//    	PRINTF(" --- 3 --- \n");
+//    	PRINTF(" --- 4 --- \n");
+//        stop_Motor();
+//	PRINTF(" --- 5 --- \n");
+
     while(1) {
-    	PRINTF(" --- 1 --- \n");
-        rotate_left_Motor();
-    	PRINTF(" --- 2 --- \n");
-        delay(500U);
-    	PRINTF(" --- 3 --- \n");
-        readCAN();
-    	PRINTF(" --- 4 --- \n");
-        stop_Motor();
-    	PRINTF(" --- 5 --- \n");
 
         blinkUSERLED();
     }

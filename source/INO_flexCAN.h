@@ -11,5 +11,6 @@ void readCAN();
 
 void rotate_left_Motor();
 void stop_Motor();
+void askPump();
 
 #endif
